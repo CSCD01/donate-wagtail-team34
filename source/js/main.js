@@ -32,13 +32,52 @@ function closeMenu() {
   document.querySelector("[data-primary-nav]").classList.remove("is-visible");
   tabIndexer();
 }
-var tabsArray = new Array();
+var tabsArray = [];
+var monthly = false;
+var re = /.*\/\/.*\/.*\//;
 document.addEventListener("DOMContentLoaded", function() {
+  console.log("pageonload", monthly);
+  console.log("window location", window.location.href);
+  console.log('window equation test', re.exec(window.location.href))
+  console.log(tabsArray);
+  tabsArray.forEach(tabObj => {
+    var tab = tabObj.getTab();
+    console.log('tab objects', tab);
+    if (tab.id === 'tab-1') {
+      monthly = tabObj.getFlag();
+      console.log(monthly);
+    }
+  }) 
+  console.log('111');
+  console.log('', tabsArray[0]);
   const gaMeta = document.querySelector(`meta[name="ga-identifier"]`);
   if (gaMeta) {
     let gaIdentifier = gaMeta.getAttribute(`content`);
     initializeGA(gaIdentifier);
   }
+window.addEventListener("unload", function() {
+  console.log('I am the 1st one.');
+  for (const tab_obj of tabsArray) {
+    console.log('tab objects', tab_obj);
+    if (tab_obj.tab.id == "tab-2") {
+      monthly = tab_obj.getFlag();
+      console.log(monthly);
+    }
+  }
+});
+// if(re.exec(window.location.href) && window.location.href.length < 33) {
+//   console.log('asd')
+//   window.addEventListener("unload", function() {
+//     console.log('I am the 1st one.');
+//     for (tab_obj in tabsArray) {
+//       console.log('tab objects', tab_obj);
+//       if (tab_obj.tab.id == "tab-2") {
+//         monthly = tab_obj.getFlag();
+//         console.log(monthly);
+//       }
+//     }
+//   });
+// }
 
   // Initialize Sentry error reporting
 
@@ -71,7 +110,6 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 
   for (const tabs of document.querySelectorAll(Tabs.selector())) {
-    new Tabs(tabs);
     tabsArray.push(new Tabs(tabs));
   }
 

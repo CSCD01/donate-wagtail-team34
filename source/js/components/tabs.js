@@ -19,7 +19,7 @@ class Tabs {
   getFlag(){
     return this.checkActive;
   }
-  getTabInfo(){
+  getTab(){
     return this.tab;
   }
 
