@@ -87,7 +87,14 @@ class BraintreeCardPaymentForm(CampaignFormMixin, BraintreePaymentForm):
             'ZIP Code'
         )
     )
-    country = CountryField(_('Country')).formfield(initial='US')
+
+    language_code = get_language()
+    if language_code in constants.LOCALE_COUNTRY_MAP:
+        default_country = constants.LOCALE_COUNTRY_MAP[language_code]
+    else:
+        default_country = 'US'
+
+    country = CountryField(_('Country')).formfield(initial=default_country)
     device_data = forms.CharField(widget=forms.HiddenInput, required=False)
 
     if settings.RECAPTCHA_ENABLED:
