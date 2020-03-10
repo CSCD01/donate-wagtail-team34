@@ -28,6 +28,7 @@ function setupBraintree() {
     }
   };
   var getAmountMonthly = () => {
+    // var donateState = document.getElementById("tab-2");
     var donateForm = document.getElementById("donate-form--monthly");
     return donateForm.querySelector('input[name="amount"]:checked').value;
   };

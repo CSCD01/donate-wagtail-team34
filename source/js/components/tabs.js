@@ -7,12 +7,20 @@ class Tabs {
 
   constructor(node) {
     this.tab = node;
+    this.checkActive = false;
     this.tabset = this.tab.closest(".js-tabs");
     this.allTabs = this.tabset.querySelectorAll(".js-tab-item");
     let tabPanelId = this.tab.getAttribute("aria-controls");
     this.tabPanel = document.getElementById(tabPanelId);
     this.allTabPanels = this.tabset.querySelectorAll(".js-tab-panel");
     this.bindEvents();
+  }
+
+  getFlag(){
+    return this.checkActive;
+  }
+  getTabInfo(){
+    return this.tab;
   }
 
   bindEvents() {
@@ -25,7 +33,10 @@ class Tabs {
       for (let tabPanel of this.allTabPanels) {
         tabPanel.classList.add("tabs__panel--hidden");
       }
-
+      let checked = this.tab.getAttribute("id");
+      if(checked === "tab-2"){
+        this.checkActive = true;
+      }
       this.tab.classList.add("active");
       this.tab.setAttribute("aria-selected", "true");
       this.tabPanel.classList.remove("tabs__panel--hidden");

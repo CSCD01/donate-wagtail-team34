@@ -32,7 +32,7 @@ function closeMenu() {
   document.querySelector("[data-primary-nav]").classList.remove("is-visible");
   tabIndexer();
 }
-
+var tabsArray = new Array();
 document.addEventListener("DOMContentLoaded", function() {
   const gaMeta = document.querySelector(`meta[name="ga-identifier"]`);
   if (gaMeta) {
@@ -72,6 +72,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
   for (const tabs of document.querySelectorAll(Tabs.selector())) {
     new Tabs(tabs);
+    tabsArray.push(new Tabs(tabs));
   }
 
   tabIndexer();
