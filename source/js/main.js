@@ -40,31 +40,13 @@ document.addEventListener("DOMContentLoaded", function() {
   console.log("window location", window.location.href);
   console.log('window equation test', re.exec(window.location.href))
   console.log(tabsArray);
-  tabsArray.forEach(tabObj => {
-    var tab = tabObj.getTab();
-    console.log('tab objects', tab);
-    if (tab.id === 'tab-1') {
-      monthly = tabObj.getFlag();
-      console.log(monthly);
-    }
-  }) 
-  console.log('111');
-  console.log('', tabsArray[0]);
   const gaMeta = document.querySelector(`meta[name="ga-identifier"]`);
   if (gaMeta) {
     let gaIdentifier = gaMeta.getAttribute(`content`);
     initializeGA(gaIdentifier);
   }
-window.addEventListener("unload", function() {
-  console.log('I am the 1st one.');
-  for (const tab_obj of tabsArray) {
-    console.log('tab objects', tab_obj);
-    if (tab_obj.tab.id == "tab-2") {
-      monthly = tab_obj.getFlag();
-      console.log(monthly);
-    }
-  }
-});
+
+
 // if(re.exec(window.location.href) && window.location.href.length < 33) {
 //   console.log('asd')
 //   window.addEventListener("unload", function() {
@@ -115,6 +97,20 @@ window.addEventListener("unload", function() {
 
   tabIndexer();
 
+  
+
+  window.addEventListener("unload", function() {
+    console.log('I am the 1st one.');
+    tabsArray.forEach(tabObj => {
+      var tab = tabObj.getTab();
+      console.log('tab objects', tab);
+      if (tab.id === 'tab-2') {
+        monthly = tabObj.getFlag();
+        this.localStorage.setItem('monthly', "true" ? monthly : "false");
+      }
+    })
+  });
+
   for (const currencySelect of document.querySelectorAll(
     CurrencySelect.selector()
   )) {
@@ -130,6 +126,7 @@ window.addEventListener("unload", function() {
   for (const copyurl of document.querySelectorAll(CopyURL.selector())) {
     new CopyURL(copyurl);
   }
+  monthly = true;
 });
 
 // Google Analytics

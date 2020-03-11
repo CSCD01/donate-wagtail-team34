@@ -33,13 +33,15 @@ class Tabs {
       for (let tabPanel of this.allTabPanels) {
         tabPanel.classList.add("tabs__panel--hidden");
       }
-      let checked = this.tab.getAttribute("id");
-      if(checked === "tab-2"){
+      let id = this.tab.id;
+      if(id === "tab-2") {
         this.checkActive = true;
       }
+      console.log('tabs" id', id);
       this.tab.classList.add("active");
       this.tab.setAttribute("aria-selected", "true");
       this.tabPanel.classList.remove("tabs__panel--hidden");
+      
       gaEvent({
         eventCategory: "User Flow",
         eventAction: "Changed Frequency",
