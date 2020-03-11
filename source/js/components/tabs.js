@@ -7,6 +7,7 @@ class Tabs {
 
   constructor(node) {
     this.tab = node;
+    // initialize a new bool variable to trace if the radio has been activated in constructor
     this.checkActive = false;
     this.tabset = this.tab.closest(".js-tabs");
     this.allTabs = this.tabset.querySelectorAll(".js-tab-item");
@@ -15,15 +16,13 @@ class Tabs {
     this.allTabPanels = this.tabset.querySelectorAll(".js-tab-panel");
     this.bindEvents();
   }
-
+  // add getter function to retrieve checkActive value
   getFlag(){
     return this.checkActive;
   }
+    // add getter function to retrieve Tab object
   getTab(){
     return this.tab;
-  }
-  getTabPanel(){
-    return this.tabPanel;
   }
   
   bindEvents() {
@@ -36,6 +35,8 @@ class Tabs {
       for (let tabPanel of this.allTabPanels) {
         tabPanel.classList.add("tabs__panel--hidden");
       }
+      // retrieve tab id 
+      // check if the tab id is monthly, if yes change value to true
       let id = this.tab.id;
       if(id === "tab-2") {
         this.checkActive = true;

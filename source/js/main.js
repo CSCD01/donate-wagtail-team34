@@ -32,10 +32,14 @@ function closeMenu() {
   document.querySelector("[data-primary-nav]").classList.remove("is-visible");
   tabIndexer();
 }
+// initialize a list to store all taps objects
 var tabsArray = [];
 var monthly = false;
-var re = /.*\/\/.*\/.*\//;
 document.addEventListener("DOMContentLoaded", function() {
+  // get two tab instances from its id
+  // check whether the localStorage has the key "monthly"
+  // if yes, it means that monthly panel has been activated before go back
+  // remove hidden for "monthly" panel, otherwise, remove hidden for "one-time" panel
   if (document.title === "Donate today | Donate to Mozilla"){
     let donate_frequency = localStorage.getItem('monthly');
     let tab_panel_1 = document.getElementById("tab-panel-1");
@@ -50,10 +54,10 @@ document.addEventListener("DOMContentLoaded", function() {
           tab_panel_2.classList.add("tabs__panel--hidden");
           tab_panel_1.classList.remove("tabs_panel--hidden");
         }
-        }
       }
     }
   }
+}
   const gaMeta = document.querySelector(`meta[name="ga-identifier"]`);
   if (gaMeta) {
     let gaIdentifier = gaMeta.getAttribute(`content`);
@@ -95,8 +99,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
   tabIndexer();
 
-  
-
+//loop through the array to check if the "monthly" panel has been activated
+// if yes, set a key"monthly" and its corresponding value "true" in localStorage for further implementation 
   window.addEventListener("unload", function() {
     tabsArray.forEach(tabObj => {
       var tab = tabObj.getTab();
