@@ -45,6 +45,11 @@ document.addEventListener("DOMContentLoaded", function() {
         if (tab_panel_2.classList.contains("tabs__panel--hidden")){
           tab_panel_1.classList.add("tabs__panel--hidden");
           tab_panel_2.classList.remove("tabs__panel--hidden");
+        }else{
+          if(tab_panel_1.classList.contains("tabs__panel--hidden")){
+          tab_panel_2.classList.add("tabs__panel--hidden");
+          tab_panel_1.classList.remove("tabs_panel--hidden");
+        }
         }
       }
     }
