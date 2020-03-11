@@ -34,23 +34,42 @@ function closeMenu() {
 }
 var tabsArray = [];
 var monthly = false;
-// var re = /.*\/\/.*\/.*\//;
+var re = /.*\/\/.*\/.*\//;
 document.addEventListener("DOMContentLoaded", function() {
-  if(window.localStorage.length > 0){
-    if(localStorage.getItem('monthly') === 'true'){
-      console.log("wow, we get it!!!!!!!!!!!!!");
-      if((!localStorage.getItem('panel-type') === null) && (!localStorage.getItem('tag-object') === null)){
-        let myPanel = localStorage.getItem('panel-type');
-         myPanel.classList.add('tabs__panel--hidden');
+  if (document.title === "Donate today | Donate to Mozilla"){
+    let donate_frequency = localStorage.getItem('monthly');
+    let tab_panel_1 = document.getElementById("tab-panel-1");
+    let tab_panel_2 = document.getElementById("tab-panel-2");
+    if (donate_frequency){
+      if(donate_frequency === 'true'){
+        if (tab_panel_2.classList.contains("tabs__panel--hidden")){
+          tab_panel_1.classList.add("tabs__panel--hidden");
+          tab_panel_2.classList.remove("tabs__panel--hidden");
+        }
       }
     }
-
-   }
+  }
   const gaMeta = document.querySelector(`meta[name="ga-identifier"]`);
   if (gaMeta) {
     let gaIdentifier = gaMeta.getAttribute(`content`);
     initializeGA(gaIdentifier);
   }
+
+
+// if(re.exec(window.location.href) && window.location.href.length < 33) {
+//   console.log('asd')
+//   window.addEventListener("unload", function() {
+//     console.log('I am the 1st one.');
+//     for (tab_obj in tabsArray) {
+//       console.log('tab objects', tab_obj);
+//       if (tab_obj.tab.id == "tab-2") {
+//         monthly = tab_obj.getFlag();
+//         console.log(monthly);
+//       }
+//     }
+//   });
+// }
+
   // Initialize Sentry error reporting
 
   fetchEnv(envData => {
@@ -90,19 +109,13 @@ document.addEventListener("DOMContentLoaded", function() {
   
 
   window.addEventListener("unload", function() {
+    console.log('I am the 1st one.');
     tabsArray.forEach(tabObj => {
-      let tab = tabObj.getTab();
-      let panel = tabObj.getTabPanel();
-      // console.log('tab objects', tab);
+      var tab = tabObj.getTab();
+      console.log('tab objects', tab);
       if (tab.id === 'tab-2') {
         monthly = tabObj.getFlag();
         this.localStorage.setItem('monthly', "true" ? monthly : "false");
-        this.localStorage.setItem('panel-type', panel);
-        this.localStorage.setItem('tag-object', tab);
-        // console.log(monthly);
-        console.log("localstorage check", this.localStorage.getItem('monthly'));
-        console.log("localstorage check", this.localStorage.getItem('panel-type'));
-        console.log("localstorage check", this.localStorage.getItem('tag-object'));
       }
     })
   });
