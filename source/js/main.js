@@ -40,7 +40,8 @@ document.addEventListener("DOMContentLoaded", function() {
   // check whether the localStorage has the key "monthly"
   // if yes, it means that monthly panel has been activated before go back
   // remove hidden for "monthly" panel, otherwise, remove hidden for "one-time" panel
-  if (document.title === "Donate today | Donate to Mozilla"){
+  let landing_page = document.getElementsByClassName("app--landing-page ");
+  if (landing_page.length > 0){
     let donate_frequency = localStorage.getItem('monthly');
     let tab_panel_1 = document.getElementById("tab-panel-1");
     let tab_panel_2 = document.getElementById("tab-panel-2");
@@ -49,15 +50,16 @@ document.addEventListener("DOMContentLoaded", function() {
         if (tab_panel_2.classList.contains("tabs__panel--hidden")){
           tab_panel_1.classList.add("tabs__panel--hidden");
           tab_panel_2.classList.remove("tabs__panel--hidden");
-        }else{
-          if(tab_panel_1.classList.contains("tabs__panel--hidden")){
-          tab_panel_2.classList.add("tabs__panel--hidden");
-          tab_panel_1.classList.remove("tabs_panel--hidden");
         }
-      }
+        else{
+          if(tab_panel_1.classList.contains("tabs__panel--hidden")){
+            tab_panel_2.classList.add("tabs__panel--hidden");
+            tab_panel_1.classList.remove("tabs_panel--hidden");
+          }
+        }
+      } 
     }
   }
-}
   const gaMeta = document.querySelector(`meta[name="ga-identifier"]`);
   if (gaMeta) {
     let gaIdentifier = gaMeta.getAttribute(`content`);
