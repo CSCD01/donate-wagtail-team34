@@ -22,7 +22,10 @@ class Tabs {
   getTab(){
     return this.tab;
   }
-
+  getTabPanel(){
+    return this.tabPanel;
+  }
+  
   bindEvents() {
     this.tab.addEventListener("click", e => {
       for (let tab of this.allTabs) {
