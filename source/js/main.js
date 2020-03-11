@@ -54,22 +54,6 @@ document.addEventListener("DOMContentLoaded", function() {
     let gaIdentifier = gaMeta.getAttribute(`content`);
     initializeGA(gaIdentifier);
   }
-
-
-// if(re.exec(window.location.href) && window.location.href.length < 33) {
-//   console.log('asd')
-//   window.addEventListener("unload", function() {
-//     console.log('I am the 1st one.');
-//     for (tab_obj in tabsArray) {
-//       console.log('tab objects', tab_obj);
-//       if (tab_obj.tab.id == "tab-2") {
-//         monthly = tab_obj.getFlag();
-//         console.log(monthly);
-//       }
-//     }
-//   });
-// }
-
   // Initialize Sentry error reporting
 
   fetchEnv(envData => {
@@ -109,10 +93,8 @@ document.addEventListener("DOMContentLoaded", function() {
   
 
   window.addEventListener("unload", function() {
-    console.log('I am the 1st one.');
     tabsArray.forEach(tabObj => {
       var tab = tabObj.getTab();
-      console.log('tab objects', tab);
       if (tab.id === 'tab-2') {
         monthly = tabObj.getFlag();
         this.localStorage.setItem('monthly', "true" ? monthly : "false");

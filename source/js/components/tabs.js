@@ -40,7 +40,6 @@ class Tabs {
       if(id === "tab-2") {
         this.checkActive = true;
       }
-      console.log('tabs" id', id);
       this.tab.classList.add("active");
       this.tab.setAttribute("aria-selected", "true");
       this.tabPanel.classList.remove("tabs__panel--hidden");
