@@ -45,19 +45,27 @@ document.addEventListener("DOMContentLoaded", function() {
     let donate_frequency = localStorage.getItem('monthly');
     let tab_panel_1 = document.getElementById("tab-panel-1");
     let tab_panel_2 = document.getElementById("tab-panel-2");
+    let single_btn = document.getElementById("tab-1");
+    let monthly_btn = document.getElementById("tab-2");
+    let single_radio_btn = document.getElementById("one-time");
+    let monthly_radio_btn = document.getElementById("monthly");
     if (donate_frequency){
       if(donate_frequency === 'true'){
         if (tab_panel_2.classList.contains("tabs__panel--hidden")){
+          // select the correct radio button
+          single_btn.classList.remove("tabs__item--selected");
+          single_btn.setAttribute("aria-selected", "false");
+          single_btn.removeAttribute("aria-selected");
+          single_radio_btn.removeAttribute("checked");
+          monthly_btn.classList.add("tabs__item--selected");
+          monthly_btn.setAttribute("aria-selected", "true");
+          monthly_radio_btn.setAttribute("checked", "");
+          monthly_btn.classList.add("active");
+          // display the tab
           tab_panel_1.classList.add("tabs__panel--hidden");
           tab_panel_2.classList.remove("tabs__panel--hidden");
         }
-        else{
-          if(tab_panel_1.classList.contains("tabs__panel--hidden")){
-            tab_panel_2.classList.add("tabs__panel--hidden");
-            tab_panel_1.classList.remove("tabs_panel--hidden");
-          }
-        }
-      } 
+      }
     }
   }
   const gaMeta = document.querySelector(`meta[name="ga-identifier"]`);
@@ -107,8 +115,20 @@ document.addEventListener("DOMContentLoaded", function() {
     tabsArray.forEach(tabObj => {
       var tab = tabObj.getTab();
       if (tab.id === 'tab-2') {
-        monthly = tabObj.getFlag();
-        this.localStorage.setItem('monthly', "true" ? monthly : "false");
+        var monthly = tabObj.getFlag();
+        var one_time = this.localStorage.getItem("single");
+        if (one_time === null) {
+          this.localStorage.setItem('monthly', "true" ? monthly : "false");
+        } else {
+          // if one-time was not the latest button that was clicked
+          // set monthly base on tab-2's flag
+          if (one_time === 'false') {
+            this.localStorage.setItem('monthly', "true" ? monthly : "false");
+            // if one-time was recently clicked, monthly should be false
+          } else {
+            this.localStorage.setItem('monthly', "false");
+          }
+        }
       }
     })
   });
@@ -128,7 +148,6 @@ document.addEventListener("DOMContentLoaded", function() {
   for (const copyurl of document.querySelectorAll(CopyURL.selector())) {
     new CopyURL(copyurl);
   }
-  monthly = true;
 });
 
 // Google Analytics

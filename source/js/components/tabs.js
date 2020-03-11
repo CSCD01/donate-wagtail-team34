@@ -37,10 +37,17 @@ class Tabs {
       }
       // retrieve tab id 
       // check if the tab id is monthly, if yes change value to true
+      // if its tab-1, then change one-time to true indicating the latest action done by user is
+      // clicking on one-time radio button
       let id = this.tab.id;
       if(id === "tab-2") {
         this.checkActive = true;
+        localStorage.setItem("single", 'false');
+      } else {
+        localStorage.setItem('single', "true");
       }
+      console.log('this tab:', this.tab);
+      console.log( 'its flag',this.checkActive);
       this.tab.classList.add("active");
       this.tab.setAttribute("aria-selected", "true");
       this.tabPanel.classList.remove("tabs__panel--hidden");
