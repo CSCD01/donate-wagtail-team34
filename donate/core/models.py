@@ -114,12 +114,17 @@ class DonationPage(TranslatablePageMixin, Page):
         except InvalidOperation:
             return 0
 
+    def get_validate_custom_input(self):
+        return 'this.value = this.value.replace(/[^0-9.]/g, '');'
+
     def get_context(self, request):
         ctx = super().get_context(request)
         initial_frequency = self.get_initial_frequency(request)
         initial_currency = self.get_initial_currency(request)
         initial_currency_info = self.get_initial_currency_info(request, initial_currency, initial_frequency)
         initial_amount = self.get_initial_amount(request)
+        validate_custom_input = self.get_validate_custom_input()
+
         ctx.update({
             'currencies': self.currencies,
             'initial_currency_info': initial_currency_info,
@@ -133,6 +138,7 @@ class DonationPage(TranslatablePageMixin, Page):
                     'campaign_id': self.campaign_id,
                 }
             ),
+            'validate_custom_input': validate_custom_input,
             'currency_form': CurrencyForm(initial={'currency': initial_currency}),
             'recaptcha_site_key': settings.RECAPTCHA_SITE_KEY if settings.RECAPTCHA_ENABLED else None,
         })
