@@ -12,6 +12,7 @@ from donate.recaptcha.fields import ReCaptchaField
 
 from . import constants
 from .utils import get_currency_info
+import re
 
 
 # Global maximum amount value of 10 million, not currency-specific, intended
@@ -99,6 +100,18 @@ class BraintreeCardPaymentForm(CampaignFormMixin, BraintreePaymentForm):
 
     if settings.RECAPTCHA_ENABLED:
         captcha = ReCaptchaField()
+
+    def clean(self):
+        cleaned_data = super().clean()
+        post_code = cleaned_data.get("post_code")
+        country = cleaned_data.get("country")
+
+        if post_code and country:
+            # Only do something if both fields are valid so far
+            # Get corresponding regex for country
+            regex = constants.POSTAL_CODE_MAP[country]
+            if regex and not re.match(regex, post_code):
+                raise forms.ValidationError('invalid postal code')
 
 
 class BraintreePaypalPaymentForm(MinimumCurrencyAmountMixin, CampaignFormMixin, BraintreePaymentForm):
