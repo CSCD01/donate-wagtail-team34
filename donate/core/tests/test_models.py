@@ -210,6 +210,10 @@ class CampaignPageTestCase(TestCase):
         request = RequestFactory().get('/?amount=not_a_number')
         self.assertEqual(DonationPage().get_initial_amount(request), 0)
 
+    def test_get_initial_amount_scientific_notation_defaults_to_0(self):
+        request = RequestFactory().get('/?amount=1e1000')
+        self.assertEqual(DonationPage().get_initial_amount(request), 0)
+
 
 class MissingMigrationsTests(TestCase):
 
