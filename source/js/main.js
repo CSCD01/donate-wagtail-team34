@@ -34,6 +34,48 @@ function closeMenu() {
 }
 
 document.addEventListener("DOMContentLoaded", function() {
+  let landing_page = document.getElementsByClassName("app--landing-page ");
+  if (landing_page.length > 0){
+    var donateAmount = 0;
+    function getData(type) {
+      if (type === 'single'){
+        var formData = new FormData(singleForm);
+      } else {
+        var formData = new FormData(monthlyForm);
+      }
+
+      for (var pair of formData.entries()) {
+        if (pair[0] === "amount"){
+          donateAmount = pair[1];
+        }
+      }
+    }
+    var singleForm = document.getElementById("donate-form--single");
+    var monthlyForm = document.getElementById("donate-form--monthly");
+    var errorDiv = document.getElementById("payments__braintree-errors-paypal");
+    var showErrorMessage = msg => {
+      errorDiv.toggleAttribute("hidden", false);
+      errorDiv.innerHTML = msg;
+    };
+
+    singleForm.addEventListener("submit", function(event) {
+      getData('single');
+      if (donateAmount === 0){
+        event.preventDefault();
+        showErrorMessage("No amount selected! Please select a donation amount!");
+      } 
+    });
+
+    monthlyForm.addEventListener("submit", function(event) {
+      getData('monthly');
+      if (donateAmount === 0){
+        event.preventDefault();
+        showErrorMessage("No amount selected! Please select a donation amount!");
+      }
+    });
+  }
+
+
   const gaMeta = document.querySelector(`meta[name="ga-identifier"]`);
   if (gaMeta) {
     let gaIdentifier = gaMeta.getAttribute(`content`);

@@ -37,10 +37,10 @@ export default function initPaypal(
       clientErr,
       clientInstance
     ) {
-      if (clientErr) {
-        showErrorMessage(loadingErrorMsg);
-        return;
-      }
+      // if (clientErr) {
+      //   showErrorMessage(loadingErrorMsg);
+      //   return;
+      // }
 
       paypalCreate(
         {
@@ -48,10 +48,10 @@ export default function initPaypal(
           merchantAccountId: envData.BRAINTREE_MERCHANT_ACCOUNTS[currency]
         },
         function(paypalCheckoutErr, paypalCheckoutInstance) {
-          if (paypalCheckoutErr) {
-            showErrorMessage(loadingErrorMsg);
-            return;
-          }
+          // if (paypalCheckoutErr) {
+          //   showErrorMessage(loadingErrorMsg);
+          //   return;
+          // }
 
           // Set up PayPal with the checkout.js library
           window.paypal.Button.render(
