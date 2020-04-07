@@ -84,10 +84,13 @@ export default function initPaypal(
                   payload
                 ) {
                   if (err) {
-                    showErrorMessage(noAmountErrorMsg);
+                    if (getAmount() == 0) {
+                      showErrorMessage(noAmountErrorMsg);
+                      return;
+                    }
+                    showErrorMessage(generalErrorMsg);
                     return;
                   }
-
                   onAuthorize(payload);
                 });
               },
