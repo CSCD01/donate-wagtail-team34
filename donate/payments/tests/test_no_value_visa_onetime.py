@@ -21,5 +21,5 @@ if(expect.text == "No amount selected! Please select a donation amount!"):
     print("Test SUCCESS!\n");
 else:
     # if no proper error display then test fail
-    print("No error message shows on Monthly panel. Test Failed!\n");
+    print("No error message shows on One-time panel. Test Failed!\n");
 driver.close()
