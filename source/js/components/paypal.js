@@ -16,6 +16,9 @@ export default function initPaypal(
   var generalErrorMsg = window.gettext(
     "There was an error processing your payment. Please try again."
   );
+  var noAmountErrorMsg = window.gettext(
+    "You have not selected an amount to donate for. Please try again"
+  );
   var braintreeParams = JSON.parse(
     document.getElementById("payments__braintree-params").textContent
   );
@@ -81,7 +84,7 @@ export default function initPaypal(
                   payload
                 ) {
                   if (err) {
-                    showErrorMessage(generalErrorMsg);
+                    showErrorMessage(noAmountErrorMsg);
                     return;
                   }
 
