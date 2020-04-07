@@ -16,10 +16,10 @@ time.sleep(2)
 visa_select = driver.find_element_by_xpath('//*[@id="donate-form--monthly"]/div[2]/div/button')
 visa_select.click()
 time.sleep(2)
-try:
-    driver.find_element_by_id("payments__braintree-errors-paypal")
-    print("Test SUCCESS!\n")
-except:
+expect = driver.find_element_by_id("payments__braintree-errors-paypal")
+if(expect.text == "No amount selected! Please select a donation amount!"):
+    print("Test SUCCESS!\n");
+else:
     # if no proper error display then test fail
-    print("No error message shows on Monthly panel. Test Failed!\n")
+    print("No error message shows on Monthly panel. Test Failed!\n");
 driver.close()
