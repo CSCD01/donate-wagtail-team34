@@ -8,11 +8,11 @@ driver = webdriver.Chrome(driver_path)
 driver.set_page_load_timeout(10)
 driver.get(url)
 print("Test start\n");
-# click on the monthly radio button
+# click on the one time radio button
 radio_select = driver.find_element_by_id("tab-1")
 radio_select.click()
 time.sleep(2)
-# select the visa payment button and click on it
+# select the paypal payment button and click on it
 visa_select = driver.find_element_by_class_name("payments__paypal-button--single")
 visa_select.click()
 time.sleep(2)
@@ -21,5 +21,5 @@ if(expect.text == "You have not selected an amount to donate for. Please try aga
     print("Test SUCCESS!\n");
 else:
     # if no proper error display then test fail
-    print("No error message shows on one time panel. Test Failed!\n");
+    print("Not expeced error message. Test Failed!\n");
 driver.close()
