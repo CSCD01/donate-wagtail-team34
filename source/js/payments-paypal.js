@@ -10,6 +10,7 @@ function setupBraintree() {
     captchaInput = document.getElementById("id_captcha"),
     captchaEnabled = captchaInput !== null,
     currencySelect = document.getElementById("id_currency-switcher-currency");
+    errorDiv = document.getElementById("payments__braintree-errors-paypal");
 
   var getCurrency = () => currencySelect.value.toUpperCase();
   var getAmountSingle = () => {
@@ -106,6 +107,8 @@ function setupPaypalOverlays() {
     overlay.addEventListener("click", () => {
       // The fact that this function fires at all means the current value is not a
       // valid value. Force the form to report this the same way it reports everything else.
+      errorDiv.toggleAttribute("hidden", false);
+      errorDiv.innerHTML = "You have not selected an amount to donate for. Please try again.";
       form.reportValidity();
     });
   });

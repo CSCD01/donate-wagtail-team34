@@ -16,9 +16,6 @@ export default function initPaypal(
   var generalErrorMsg = window.gettext(
     "There was an error processing your payment. Please try again."
   );
-  var noAmountErrorMsg = window.gettext(
-    "You have not selected an amount to donate for. Please try again"
-  );
   var braintreeParams = JSON.parse(
     document.getElementById("payments__braintree-params").textContent
   );
@@ -40,10 +37,10 @@ export default function initPaypal(
       clientErr,
       clientInstance
     ) {
-      if (clientErr) {
-        showErrorMessage(loadingErrorMsg);
-        return;
-      }
+      // if (clientErr) {
+      //   showErrorMessage(loadingErrorMsg);
+      //   return;
+      // }
 
       paypalCreate(
         {
@@ -51,10 +48,10 @@ export default function initPaypal(
           merchantAccountId: envData.BRAINTREE_MERCHANT_ACCOUNTS[currency]
         },
         function(paypalCheckoutErr, paypalCheckoutInstance) {
-          if (paypalCheckoutErr) {
-            showErrorMessage(loadingErrorMsg);
-            return;
-          }
+          // if (paypalCheckoutErr) {
+          //   showErrorMessage(loadingErrorMsg);
+          //   return;
+          // }
 
           // Set up PayPal with the checkout.js library
           window.paypal.Button.render(
@@ -84,10 +81,6 @@ export default function initPaypal(
                   payload
                 ) {
                   if (err) {
-                    if (getAmount() == 0) {
-                      showErrorMessage(noAmountErrorMsg);
-                      return;
-                    }
                     showErrorMessage(generalErrorMsg);
                     return;
                   }
