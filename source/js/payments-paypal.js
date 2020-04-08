@@ -10,7 +10,6 @@ function setupBraintree() {
     captchaInput = document.getElementById("id_captcha"),
     captchaEnabled = captchaInput !== null,
     currencySelect = document.getElementById("id_currency-switcher-currency");
-    errorDiv = document.getElementById("payments__braintree-errors-paypal");
 
   var getCurrency = () => currencySelect.value.toUpperCase();
   var getAmountSingle = () => {
@@ -82,6 +81,7 @@ function toggle(overlay, input) {
 }
 
 function setupPaypalOverlays() {
+  var errorDiv = document.getElementById("payments__braintree-errors-paypal");
   let overlays = document.querySelectorAll(
     ".payments__button--paypal--overlay"
   );
